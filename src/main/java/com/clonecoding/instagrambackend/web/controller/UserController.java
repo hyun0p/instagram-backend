@@ -1,11 +1,12 @@
 package com.clonecoding.instagrambackend.web.controller;
 
-import com.clonecoding.instagrambackend.domain.User;
 import com.clonecoding.instagrambackend.service.UserService;
-import com.clonecoding.instagrambackend.web.dto.AuthenticationResponseDto;
-import com.clonecoding.instagrambackend.web.dto.LoginRequestDto;
-import com.clonecoding.instagrambackend.web.dto.RegisterRequestDto;
+import com.clonecoding.instagrambackend.web.dto.TokenDto;
+import com.clonecoding.instagrambackend.web.dto.LoginDto;
+import com.clonecoding.instagrambackend.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -16,18 +17,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequestDto requestDto) {
-        this.userService.register(requestDto);
-        return null;
+    public ResponseEntity<Void> register(@RequestBody UserDto userDto) {
+        this.userService.register(userDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public AuthenticationResponseDto login(@RequestBody LoginRequestDto requestDto) {
-        return this.userService.login(requestDto);
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto requestDto) {
+        return new ResponseEntity<>(this.userService.login(requestDto), HttpStatus.OK);
     }
 
-    @PostMapping("/logout")
-    public User logout() {
-        return null;
-    }
 }

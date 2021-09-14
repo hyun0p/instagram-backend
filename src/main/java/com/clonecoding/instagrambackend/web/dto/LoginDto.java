@@ -3,10 +3,7 @@ package com.clonecoding.instagrambackend.web.dto;
 import lombok.Getter;
 
 @Getter
-public class RegisterRequestDto {
+public class LoginDto {
     private String username;
-    private String name;
     private String password;
-    private String email;
 }
-
