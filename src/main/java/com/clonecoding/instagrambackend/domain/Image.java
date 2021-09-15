@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Entity
@@ -14,9 +14,10 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank
     private String url;
-    @NotNull
+
+    @NotBlank
     private String type;
 
     @ManyToOne(fetch = FetchType.LAZY)

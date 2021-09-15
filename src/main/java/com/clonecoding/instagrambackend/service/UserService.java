@@ -1,9 +1,6 @@
 package com.clonecoding.instagrambackend.service;
 
-import com.clonecoding.instagrambackend.domain.Role;
-import com.clonecoding.instagrambackend.domain.RoleRepository;
-import com.clonecoding.instagrambackend.domain.User;
-import com.clonecoding.instagrambackend.domain.UserRepository;
+import com.clonecoding.instagrambackend.domain.*;
 import com.clonecoding.instagrambackend.jwt.JwtTokenProvider;
 import com.clonecoding.instagrambackend.web.dto.TokenDto;
 import com.clonecoding.instagrambackend.web.dto.LoginDto;
@@ -31,7 +28,7 @@ public class UserService {
 
     @Transactional
     public void register(UserDto userDto) {
-        Role userRole = roleRepository.findByName("ROLE_USER")
+        Role userRole = roleRepository.findByRole(Roletype.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("Error : ROLE_USER is not found"));
         User user = User.builder()
                 .username(userDto.getUsername())

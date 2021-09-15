@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,10 +18,13 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String text;
+
     @CreatedDate
     private LocalDateTime created_at;
+
     private Long views = 0L;
 
     @ManyToOne(fetch = FetchType.LAZY)

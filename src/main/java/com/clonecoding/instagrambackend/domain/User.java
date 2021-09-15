@@ -1,37 +1,39 @@
 package com.clonecoding.instagrambackend.domain;
 
-import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-//@NoArgsConstructor
 @Getter
 @Entity
-public class User{
+public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
+    @NotBlank
     private String username;
-    @NotNull
+
+    @NotBlank
     private String name;
-    @NotNull
+
+    @NotBlank
     private String password;
-    @NotNull
+
+    @Email
+    @NotBlank
     private String email;
 
     private boolean activated;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable( name="user_role",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_name"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {}
