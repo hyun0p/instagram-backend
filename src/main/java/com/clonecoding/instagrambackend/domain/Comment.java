@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Post {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,40 +28,30 @@ public class Post {
     @CreatedDate
     private LocalDateTime created_at;
 
-    private Long views = 0L;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Image> images;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    // 대댓글
 
-    public Post() {}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
 
-    public void setText(String text) {
-        this.text = text;
-    }
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private List<Comment> children = new ArrayList<>();
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
+    public Comment() {}
 
     @Builder
-    public Post(String text, User user, List<Image> images) {
+    public Comment(String text, User user, Post post, Comment parent) {
         this.text = text;
         this.user = user;
-        this.images = images;
-    }
-
-    public void updateViews() {
-        this.views++;
+        this.post = post;
+        this.parent = parent;
     }
 }
