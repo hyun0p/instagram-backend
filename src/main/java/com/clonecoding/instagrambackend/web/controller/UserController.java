@@ -1,8 +1,6 @@
 package com.clonecoding.instagrambackend.web.controller;
 
 import com.clonecoding.instagrambackend.service.UserService;
-import com.clonecoding.instagrambackend.web.dto.TokenDto;
-import com.clonecoding.instagrambackend.web.dto.LoginDto;
 import com.clonecoding.instagrambackend.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -22,9 +20,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto requestDto) {
-        return new ResponseEntity<>(this.userService.login(requestDto), HttpStatus.OK);
-    }
+
 
 }
