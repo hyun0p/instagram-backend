@@ -42,8 +42,9 @@ public class FollowService {
     }
 
     @Transactional
-    public List<UserInfoDto> getFollowings() {
-        User user = getCurrentUser();
+    public List<UserInfoDto> getFollowings(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
         List<Follow> followings = followRepository.findByFollower(user);
         return followings.stream()
                 .map(follow -> userMapper.toDto(follow.getFollowee()))
@@ -51,8 +52,9 @@ public class FollowService {
     }
 
     @Transactional
-    public List<UserInfoDto> getFollowers() {
-        User user = getCurrentUser();
+    public List<UserInfoDto> getFollowers(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
         List<Follow> followers = followRepository.findByFollowee(user);
         return followers.stream()
                 .map(follow -> userMapper.toDto(follow.getFollower()))

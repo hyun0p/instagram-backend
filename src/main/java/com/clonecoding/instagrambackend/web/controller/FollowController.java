@@ -28,13 +28,13 @@ public class FollowController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/followers")
-    public ResponseEntity<List<UserInfoDto>> getFollowers() {
-        return new ResponseEntity<>(followService.getFollowers(), HttpStatus.OK);
+    @GetMapping("/{username}/followers")
+    public ResponseEntity<List<UserInfoDto>> getFollowers(@PathVariable String username) {
+        return new ResponseEntity<>(followService.getFollowers(username), HttpStatus.OK);
     }
 
-    @GetMapping("/followings")
-    public ResponseEntity<List<UserInfoDto>> getFollowings() {
-        return new ResponseEntity<>(followService.getFollowings(), HttpStatus.OK);
+    @GetMapping("/{username}/followings")
+    public ResponseEntity<List<UserInfoDto>> getFollowings(@PathVariable String username) {
+        return new ResponseEntity<>(followService.getFollowings(username), HttpStatus.OK);
     }
 }
