@@ -28,6 +28,13 @@ public class User {
     @NotBlank
     private String email;
 
+    @NotBlank
+    private String text;
+
+    @NotBlank
+    private String image;
+
+
     private boolean activated;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -46,5 +53,13 @@ public class User {
         this.email = email;
         this.activated = true;
         this.roles = roles;
+    }
+
+    public void update(String username, String name, String email, String text, String image) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.text = text;
+        this.image = image;
     }
 }

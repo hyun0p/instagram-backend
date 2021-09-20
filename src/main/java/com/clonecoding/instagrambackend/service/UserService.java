@@ -1,7 +1,9 @@
 package com.clonecoding.instagrambackend.service;
 
 import com.clonecoding.instagrambackend.domain.*;
+import com.clonecoding.instagrambackend.mapper.UserMapper;
 import com.clonecoding.instagrambackend.web.dto.UserDto;
+import com.clonecoding.instagrambackend.web.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Transactional
     public void register(UserDto userDto) {
@@ -36,4 +39,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void update(String username, UserInfoDto userInfoDto) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
+        user.update(userInfoDto.getUsername(), userInfoDto.getName(), userInfoDto.getEmail(), userInfoDto.getText(), userInfoDto.getImage());
+    }
+
+    @Transactional
+    public void delete(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
+        userRepository.delete(user);
+    }
+
+    @Transactional
+    public UserInfoDto getUserInfo(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
+        return userMapper.toDto(user);
+    }
 }

@@ -18,6 +18,7 @@ public interface PostMapper {
     @Mapping(target = "images", source = "images", qualifiedByName = "ImageDtoList")
     PostDto toDto(Post post);
 
+    @Mapping(target = "text", source = "postRequestDto.text")
     @Mapping(target = "user", source = "user")
     Post toEntity(PostRequestDto postRequestDto, User user, List<Image> images);
 }
