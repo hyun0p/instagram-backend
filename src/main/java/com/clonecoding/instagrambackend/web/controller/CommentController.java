@@ -27,21 +27,21 @@ public class CommentController {
     }
 
     @ApiOperation("댓글 삭제")
-    @DeleteMapping("/comments/{comment_id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long post_id) {
-        commentService.deleteComment(post_id);
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long postId) {
+        commentService.deleteComment(postId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ApiOperation("포스트의 모든 댓글 불러오기")
-    @GetMapping("/posts/{post_id}/comments")
-    public ResponseEntity<List<CommentDto>> getPostComment(@PathVariable Long post_id) {
-        return new ResponseEntity<>(commentService.getPostComments(post_id), HttpStatus.CREATED);
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<List<CommentDto>> getPostComment(@PathVariable Long postId) {
+        return new ResponseEntity<>(commentService.getPostComments(postId), HttpStatus.CREATED);
     }
 
     @ApiOperation("대댓글 불러오기")
-    @GetMapping("/comments/{comment_id}/comments")
-    public ResponseEntity<List<CommentDto>> getNestedComment(@PathVariable Long comment_id) {
-        return new ResponseEntity<>(commentService.getNestedComments(comment_id), HttpStatus.CREATED);
+    @GetMapping("/comments/{commentId}/comments")
+    public ResponseEntity<List<CommentDto>> getNestedComment(@PathVariable Long commentId) {
+        return new ResponseEntity<>(commentService.getNestedComments(commentId), HttpStatus.CREATED);
     }
 }

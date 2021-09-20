@@ -25,9 +25,9 @@ public class PostController {
     }
 
     @ApiOperation("포스트 삭제")
-    @DeleteMapping("/{post_id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long post_id) {
-        postService.deletePost(post_id);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
