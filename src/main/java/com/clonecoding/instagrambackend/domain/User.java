@@ -15,6 +15,7 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     @NotBlank
     private String username;
 
@@ -24,6 +25,7 @@ public class User {
     @NotBlank
     private String password;
 
+    @Column(unique = true)
     @Email
     @NotBlank
     private String email;
@@ -33,7 +35,6 @@ public class User {
 
     @NotBlank
     private String image;
-
 
     private boolean activated;
 
