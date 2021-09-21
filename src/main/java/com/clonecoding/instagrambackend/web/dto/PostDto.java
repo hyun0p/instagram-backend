@@ -14,4 +14,5 @@ public class PostDto {
     private String text;
     private Long views;
     private List<ImageDto> images;
+    private Long likes;
 }

@@ -16,6 +16,7 @@ public interface PostMapper {
 
     @Mapping(target = "username", source = "user.username")
     @Mapping(target = "images", source = "images", qualifiedByName = "ImageDtoList")
+    @Mapping(target = "likes", expression = "java(Long.valueOf(post.getLikes().size()))")
     PostDto toDto(Post post);
 
     @Mapping(target = "text", source = "postRequestDto.text")

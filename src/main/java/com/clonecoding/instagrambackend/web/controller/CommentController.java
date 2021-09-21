@@ -1,6 +1,7 @@
 package com.clonecoding.instagrambackend.web.controller;
 
 import com.clonecoding.instagrambackend.service.CommentService;
+import com.clonecoding.instagrambackend.service.LikeService;
 import com.clonecoding.instagrambackend.web.dto.CommentDto;
 import com.clonecoding.instagrambackend.web.dto.CommentRequestDto;
 import com.clonecoding.instagrambackend.web.dto.PostRequestDto;
@@ -19,6 +20,7 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final LikeService likeService;
 
     @ApiOperation("새 댓글 생성")
     @PostMapping("/comments")
@@ -43,5 +45,19 @@ public class CommentController {
     @GetMapping("/comments/{commentId}/comments")
     public ResponseEntity<List<CommentDto>> getNestedComment(@PathVariable Long commentId) {
         return new ResponseEntity<>(commentService.getNestedComments(commentId), HttpStatus.CREATED);
+    }
+
+    @ApiOperation("댓글 좋아요")
+    @PostMapping("/comments/{commentId}/like")
+    public ResponseEntity<String> likeComment(@PathVariable Long commentId) {
+        likeService.likeComment(commentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation("댓글 좋아요 취소")
+    @DeleteMapping("/comments/{commentId}/like")
+    public ResponseEntity<String> unlikeComment(@PathVariable Long commentId) {
+        likeService.unlikeComment(commentId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

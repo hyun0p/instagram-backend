@@ -1,5 +1,6 @@
 package com.clonecoding.instagrambackend.web.controller;
 
+import com.clonecoding.instagrambackend.service.LikeService;
 import com.clonecoding.instagrambackend.service.PostService;
 import com.clonecoding.instagrambackend.web.dto.PostDto;
 import com.clonecoding.instagrambackend.web.dto.PostRequestDto;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
+    private final LikeService likeService;
 
     @ApiOperation("새 포스트 생성")
     @PostMapping
@@ -37,4 +39,17 @@ public class PostController {
         return new ResponseEntity<>(postService.getPostsByUsername(username), HttpStatus.OK);
     }
 
+    @ApiOperation("포스트 좋아요")
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<String> likePost(@PathVariable Long postId) {
+        likeService.likePost(postId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation("포스트 좋아요 취소")
+    @DeleteMapping("/{postId}/like")
+    public ResponseEntity<String> unlikePost(@PathVariable Long postId) {
+        likeService.unlikePost(postId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

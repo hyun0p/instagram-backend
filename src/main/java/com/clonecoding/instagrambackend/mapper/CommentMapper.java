@@ -15,16 +15,19 @@ public interface CommentMapper {
     @Mapping(target = "postId", source = "post.id")
     @Mapping(target = "parentId", ignore = true)
     @Mapping(target = "childrenSize", expression = "java(Long.valueOf(comment.getChildren().size()))")
+    @Mapping(target = "likes", expression = "java(Long.valueOf(comment.getLikes().size()))")
     CommentDto postCommentToDto(Comment comment);
 
     @Mapping(target = "username", source = "user.username")
     @Mapping(target = "postId", ignore = true)
     @Mapping(target = "parentId", source = "parent.id")
     @Mapping(target = "childrenSize", expression = "java(Long.valueOf(comment.getChildren().size()))")
+    @Mapping(target = "likes", expression = "java(Long.valueOf(comment.getLikes().size()))")
     CommentDto nestedCommentToDto(Comment comment);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "created_at", ignore = true)
+    @Mapping(target = "likes", ignore = true)
     @Mapping(target = "text", source = "commentRequestDto.text")
     @Mapping(target = "user", source = "user")
     @Mapping(target = "post", source = "post")

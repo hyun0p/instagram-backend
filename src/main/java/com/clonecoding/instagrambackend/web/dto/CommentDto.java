@@ -14,4 +14,5 @@ public class CommentDto {
     private Long postId;
     private Long parentId;
     private Long childrenSize;
+    private Long likes;
 }
