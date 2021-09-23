@@ -39,6 +39,12 @@ public class PostController {
         return new ResponseEntity<>(postService.getPostsByUsername(username), HttpStatus.OK);
     }
 
+    @ApiOperation("피드")
+    @GetMapping("/feeds")
+    public ResponseEntity<PostsDto> getFeeds() {
+        return new ResponseEntity<>(postService.getFeeds(), HttpStatus.OK);
+    }
+
     @ApiOperation("포스트 좋아요")
     @PostMapping("/{postId}/like")
     public ResponseEntity<String> likePost(@PathVariable Long postId) {

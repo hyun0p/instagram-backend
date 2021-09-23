@@ -7,6 +7,8 @@ import com.clonecoding.instagrambackend.web.dto.PostDto;
 import com.clonecoding.instagrambackend.web.dto.PostRequestDto;
 import com.clonecoding.instagrambackend.web.dto.PostsDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
+    private final FollowRepository followRepository;
     private final PostMapper postMapper;
     private final ImageMapper imageMapper;
 
@@ -55,5 +58,24 @@ public class PostService {
         Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new RuntimeException("Error : post is not found"));
         postRepository.delete(post);
+    }
+
+    @Transactional
+    public PostsDto getFeeds() {
+        User user = getCurrentUser();
+        List<Long> followingIds = followRepository.findByFollower(user)
+                .stream().
+                map(follow -> follow.getFollowee().getId())
+                .collect(Collectors.toList());
+        return new PostsDto(postRepository.findByUserIdIn(followingIds, Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList()));
+    }
+
+    private User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Error : User is not found"));
     }
 }

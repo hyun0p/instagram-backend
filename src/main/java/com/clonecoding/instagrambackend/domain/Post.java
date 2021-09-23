@@ -25,7 +25,7 @@ public class Post {
     private String text;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     private Long views = 0L;
 
