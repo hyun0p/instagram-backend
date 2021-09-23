@@ -13,4 +13,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 //    @Query("SELECT * from Post p where user_id in :ids")
     List<Post> findByUserIdIn(List<Long> ids, Sort sort);
+
+    @Query("SELECT count(c) from Post p join p.comments c where p.id = ?1")
+    Long countComments(Long id);
+
+    @Query("SELECT count(l) from Post p join p.likes l where p.id = ?1")
+    Long countLikes(Long id);
 }

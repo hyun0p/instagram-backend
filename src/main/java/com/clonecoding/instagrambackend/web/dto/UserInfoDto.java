@@ -13,4 +13,7 @@ public class UserInfoDto {
     private String email;
     private String text;
     private String image;
+    private Long posts;
+    private Long followings;
+    private Long followers;
 }

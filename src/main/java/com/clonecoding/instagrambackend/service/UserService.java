@@ -57,6 +57,6 @@ public class UserService {
     public UserInfoDto getUserInfo(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Error : User is not found"));
-        return userMapper.toDto(user);
+        return userMapper.toDto(user, userRepository);
     }
 }

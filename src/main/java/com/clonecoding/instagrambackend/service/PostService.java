@@ -32,7 +32,7 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException("Error : user is not found"));
         List<PostDto> postDtos = postRepository.findByUser(user)
                 .stream()
-                .map(postMapper::toDto)
+                .map(post -> postMapper.toDto(post, postRepository))
                 .collect(Collectors.toList());
         return new PostsDto(postDtos);
     }
@@ -69,7 +69,7 @@ public class PostService {
                 .collect(Collectors.toList());
         return new PostsDto(postRepository.findByUserIdIn(followingIds, Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
-                .map(postMapper::toDto)
+                .map(post -> postMapper.toDto(post, postRepository))
                 .collect(Collectors.toList()));
     }
 

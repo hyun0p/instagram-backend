@@ -47,7 +47,7 @@ public class FollowService {
                 .orElseThrow(() -> new RuntimeException("Error : User is not found"));
         List<Follow> followings = followRepository.findByFollower(user);
         return followings.stream()
-                .map(follow -> userMapper.toDto(follow.getFollowee()))
+                .map(follow -> userMapper.toDto(follow.getFollowee(), userRepository))
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +57,7 @@ public class FollowService {
                 .orElseThrow(() -> new RuntimeException("Error : User is not found"));
         List<Follow> followers = followRepository.findByFollowee(user);
         return followers.stream()
-                .map(follow -> userMapper.toDto(follow.getFollower()))
+                .map(follow -> userMapper.toDto(follow.getFollower(), userRepository))
                 .collect(Collectors.toList());
     }
 

@@ -40,7 +40,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Error : post is not found"));
         Comment comment = commentMapper.toEntity(commentRequestDto, user, post, null);
         commentRepository.save(comment);
-        return commentMapper.postCommentToDto(comment);
+        return commentMapper.postCommentToDto(comment, commentRepository);
     }
 
     private CommentDto createNestedComment(User user, CommentRequestDto commentRequestDto) {
@@ -48,7 +48,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Error : comment is not found"));
         Comment comment = commentMapper.toEntity(commentRequestDto, user, null, parent);
         commentRepository.save(comment);
-        return commentMapper.nestedCommentToDto(comment);
+        return commentMapper.nestedCommentToDto(comment, commentRepository);
     }
 
     @Transactional
@@ -64,7 +64,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Error : post is not found"));
         return commentRepository.findByPost(post)
                 .stream()
-                .map(commentMapper::postCommentToDto)
+                .map(comment -> commentMapper.postCommentToDto(comment, commentRepository))
                 .collect(Collectors.toList());
     }
 
@@ -74,7 +74,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Error : comment is not found"));
         return commentRepository.findByParent(parent)
                 .stream()
-                .map(commentMapper::nestedCommentToDto)
+                .map(comment -> commentMapper.nestedCommentToDto(comment, commentRepository))
                 .collect(Collectors.toList());
     }
 }

@@ -15,4 +15,5 @@ public class PostDto {
     private Long views;
     private List<ImageDto> images;
     private Long likes;
+    private Long comments;
 }
