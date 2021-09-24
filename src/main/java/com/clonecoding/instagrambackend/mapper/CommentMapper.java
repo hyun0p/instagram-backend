@@ -12,18 +12,18 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
 
-    @Mapping(target = "username", source = "user.username")
-    @Mapping(target = "postId", source = "post.id")
+    @Mapping(target = "username", source = "comment.user.username")
+    @Mapping(target = "postId", source = "comment.post.id")
     @Mapping(target = "parentId", ignore = true)
-    @Mapping(target = "childrenSize", expression = "java(commentRepository.countChildren(comment.getId())")
-    @Mapping(target = "likes", expression = "java(commentRepository.countLikes(comment.getId())")
+    @Mapping(target = "childrenSize", expression = "java(commentRepository.countChildren(comment.getId()))")
+    @Mapping(target = "likes", expression = "java(commentRepository.countLikes(comment.getId()))")
     CommentDto postCommentToDto(Comment comment, CommentRepository commentRepository);
 
-    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "username", source = "comment.user.username")
     @Mapping(target = "postId", ignore = true)
-    @Mapping(target = "parentId", source = "parent.id")
-    @Mapping(target = "childrenSize", expression = "java(commentRepository.countChildren(comment.getId())")
-    @Mapping(target = "likes", expression = "java(commentRepository.countLikes(comment.getId())")
+    @Mapping(target = "parentId", source = "comment.parent.id")
+    @Mapping(target = "childrenSize", expression = "java(commentRepository.countChildren(comment.getId()))")
+    @Mapping(target = "likes", expression = "java(commentRepository.countLikes(comment.getId()))")
     CommentDto nestedCommentToDto(Comment comment, CommentRepository commentRepository);
 
     @Mapping(target = "id", ignore = true)

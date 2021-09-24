@@ -15,10 +15,10 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = ImageMapper.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PostMapper {
 
-    @Mapping(target = "username", source = "user.username")
-    @Mapping(target = "images", source = "images", qualifiedByName = "ImageDtoList")
-    @Mapping(target = "comments", expression = "java(postRepository.countComments(post.getId())")
-    @Mapping(target = "likes", expression = "java(postRepository.countLikes(post.getId())")
+    @Mapping(target = "username", source = "post.user.username")
+    @Mapping(target = "images", source = "post.images", qualifiedByName = "ImageDtoList")
+    @Mapping(target = "comments", expression = "java(postRepository.countComments(post.getId()))")
+    @Mapping(target = "likes", expression = "java(postRepository.countLikes(post.getId()))")
     PostDto toDto(Post post, PostRepository postRepository);
 
     @Mapping(target = "text", source = "postRequestDto.text")
