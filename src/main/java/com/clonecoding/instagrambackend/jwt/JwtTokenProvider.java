@@ -3,6 +3,7 @@ package com.clonecoding.instagrambackend.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
     @Value("${jwt.secret}")
@@ -26,7 +28,7 @@ public class JwtTokenProvider {
     private Long expirationTime;
 
     private Key key;
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @PostConstruct
     public void init() {

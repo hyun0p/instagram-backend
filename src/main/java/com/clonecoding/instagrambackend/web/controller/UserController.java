@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -22,12 +23,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PreAuthorize("isAuthenticated() and #username == authentication.principal.username")
     @PatchMapping("/{username}")
     public ResponseEntity<Void> update(@PathVariable String username, @RequestBody UserInfoDto userInfoDto) {
         userService.update(username, userInfoDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("isAuthenticated() and #username == authentication.principal.username")
     @DeleteMapping("/{username}")
     public ResponseEntity<Void> delete(@PathVariable String username) {
         userService.delete(username);
