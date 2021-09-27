@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class PostController {
     private final LikeService likeService;
 
     @ApiOperation("새 포스트 생성")
+    @PreAuthorize("isAuthenticated() and #postRequestDto.username == authentication.principal.username")
     @PostMapping
     public ResponseEntity<Void> createPost(@RequestBody PostRequestDto postRequestDto) {
         postService.createPost(postRequestDto);
@@ -27,6 +29,7 @@ public class PostController {
     }
 
     @ApiOperation("포스트 삭제")
+    @PreAuthorize("isAuthenticated() and #postRequestDto.username == authentication.principal.username")
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);

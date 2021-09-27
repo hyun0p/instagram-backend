@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +24,14 @@ public class CommentController {
     private final LikeService likeService;
 
     @ApiOperation("새 댓글 생성")
+    @PreAuthorize("isAuthenticated() and #commentRequestDto.username == authentication.principal.username")
     @PostMapping("/comments")
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentRequestDto commentRequestDto) {
         return new ResponseEntity<>(commentService.createComment(commentRequestDto), HttpStatus.CREATED);
     }
 
     @ApiOperation("댓글 삭제")
+    @PreAuthorize("isAuthenticated() and #commentRequestDto.username == authentication.principal.username")
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long postId) {
         commentService.deleteComment(postId);
