@@ -4,6 +4,7 @@
 - 기간 : 2021. 09
 - 사용 기술 : Java 11, Spring Boot (gradle), JPA, MySQL
 - 웹 개발 프레임워크로 Java Spring 을 많이 사용하는데 어떤 프레임워크인지 이번 클론 코딩을 통해 경험하고 공부해볼 수 있었다.
+- [velog](https://velog.io/@h000/%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8-%ED%81%B4%EB%A1%A0-%EC%BD%94%EB%94%A9)
 
 ## API
 서버 실행 후, http://localhost:8080/swagger-ui/ 에서 확인할 수 있다.
